@@ -109,7 +109,6 @@ prompt = ChatPromptTemplate.from_messages(messages)
 def process_query(vectordb, query, chat_history):
     # Create a retriever from the FAISS vector database
     retriever = vectordb.as_retriever(search_kwargs={"k": 5})
-    print("2")
 
     # Create a ConversationalRetrievalChain with a StuffedDocumentChain
     chain = ConversationalRetrievalChain.from_llm(
@@ -120,15 +119,12 @@ def process_query(vectordb, query, chat_history):
         verbose=True,
     )
 
-    print("3")
     # Format chat history to a list of tuples
     formatted_chat_history = [(item['question'], item['answer']) for item in chat_history]
 
-    print("4")
     # Run the prompt and return the response
     response = chain({"question": query, "chat_history": formatted_chat_history})
 
-    print("5")
     return response
 
 def get_database():
@@ -155,12 +151,10 @@ def main():
             check = relevance_check(query, response["answer"])
             
             if check == "no":
-                print("Searching")
                 search_result = web_search(query)
                 st.write(search_result)
                 chat_history.append({"question": query, "answer": search_result})
             else:
-                print("No Searching")
                 st.write(response["answer"])
                 chat_history.append({"question": query, "answer": response["answer"]})
                 
