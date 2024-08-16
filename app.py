@@ -68,7 +68,7 @@ def web_search(query):
 def checker(question):
     prompt1 = PromptTemplate(
         template = """<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a checker assessing whether a question
-        is related to Construction Industry Scheme (CIS) as it was implemented post-April 2007. The data you will be working with is structured into different sections and content areas, each dealing with specific aspects of the scheme, such as contractor registration, subcontractor verification, deductions, compliance, relevant legislation etc.
+        is related to "Government Information". The data you will be working with is structured into different sections and content areas, each dealing with specific aspects of the scheme, such as contractor registration, subcontractor verification, deductions, compliance, relevant legislation etc.
         Provide the binary score as a JSON with a single key 'score' with yes or no and  no preamble or explanation.
         <|eot_id|><|start_header_id|>user<|end_header_id|> 
         \n ------- \n
@@ -109,7 +109,6 @@ prompt = ChatPromptTemplate.from_messages(messages)
 def process_query(vectordb, query, chat_history):
     # Create a retriever from the FAISS vector database
     retriever = vectordb.as_retriever(search_kwargs={"k": 5})
-    print("2")
 
     # Create a ConversationalRetrievalChain with a StuffedDocumentChain
     chain = ConversationalRetrievalChain.from_llm(
@@ -133,7 +132,7 @@ def process_query(vectordb, query, chat_history):
 
 def get_database():
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    vectordb = FAISS.load_local("faiss", embeddings, allow_dangerous_deserialization=True)
+    vectordb = FAISS.load_local("faisss", embeddings, allow_dangerous_deserialization=True)
     return vectordb
     
 
@@ -145,26 +144,26 @@ def main():
     st.session_state['vectordb'] = get_database()
 
     if st.button("Submit Query", key="query_submit"):
-        if checker(query) == "no":
-            st.write("I have the information related to Construction Industry Scheme (CIS). Your question is not related to that so kindly ask relevant questions only.")
+        # if checker(query) == "no":
+        #     st.write("I have the information related to Construction Industry Scheme (CIS). Your question is not related to that so kindly ask relevant questions only.")
+        # else:
+        chat_history = st.session_state.get('chat_history', [])
+        
+        response = process_query(st.session_state['vectordb'], query, chat_history)
+        
+        check = relevance_check(query, response["answer"])
+        
+        if check == "no":
+            print("Searching")
+            search_result = web_search(query)
+            st.write(search_result)
+            chat_history.append({"question": query, "answer": search_result})
         else:
-            chat_history = st.session_state.get('chat_history', [])
-
-            response = process_query(st.session_state['vectordb'], query, chat_history)
+            print("No Searching")
+            st.write(response["answer"])
+            chat_history.append({"question": query, "answer": response["answer"]})
             
-            check = relevance_check(query, response["answer"])
-            
-            if check == "no":
-                print("Searching")
-                search_result = web_search(query)
-                st.write(search_result)
-                chat_history.append({"question": query, "answer": search_result})
-            else:
-                print("No Searching")
-                st.write(response["answer"])
-                chat_history.append({"question": query, "answer": response["answer"]})
-                
-            st.session_state['chat_history'] = chat_history
+        st.session_state['chat_history'] = chat_history
 
 if __name__ == "__main__":
     main()
