@@ -19,7 +19,7 @@ os.environ["GOOGLE_API_KEY"] = "AIzaSyCMtgjCDQl7iBJsLa2iGTH0KBmsIw3UGFo"
 os.environ["TAVILY_API_KEY"] = "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"
 
 llm = ChatGroq(
-        api_key="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",
+        api_key="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",
         temperature=0,
         model="llama-3.1-70b-versatile",
     )
