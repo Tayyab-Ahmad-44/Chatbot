@@ -137,6 +137,13 @@ def get_database():
     
 
 def main():
+    st.markdown("""
+    <style>
+    .css-2trqyj.e16nr0p30 {
+        display: none;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     # Set the title and subtitle of the app
     st.title("🦜🔗 Chat With Files")
     st.header("Ask Questions")
