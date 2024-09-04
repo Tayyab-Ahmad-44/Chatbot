@@ -137,18 +137,17 @@ def get_database():
     
 
 def main():
-    st.markdown(
-    """
-    <style>
-    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
-    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
-    .viewerBadge_text__1JaDK {
-        display: none;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-    )
+    # Custom CSS to hide the header
+    hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            header {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+
+    # Inject the CSS
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
     # Set the title and subtitle of the app
     st.title("🦜🔗 Chat With Files")
     st.header("Ask Questions")
