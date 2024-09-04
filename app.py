@@ -137,12 +137,13 @@ def get_database():
     
 
 def main():
-    hide_github_icon = """
-    #GithubIcon {
-      visibility: hidden;
+    st.markdown("""
+    <style>
+    .css-2trqyj.e16nr0p30 {
+        display: none;
     }
-    """
-    st.markdown(hide_github_icon, unsafe_allow_html=True)
+    </style>
+    """, unsafe_allow_html=True)
     # Set the title and subtitle of the app
     st.title("🦜🔗 Chat With Files")
     st.header("Ask Questions")
