@@ -159,6 +159,19 @@ def main():
         #     st.write("I have the information related to Construction Industry Scheme (CIS). Your question is not related to that so kindly ask relevant questions only.")
         # else:
         chat_history = st.session_state.get('chat_history', [])
+
+        if "cis" in query:
+            query = query.replace("cis", "Construction Industry Scheme Reforms")
+        elif "cisr" in query:
+            query = query.replace("cisr", "Construction Industry Scheme Reforms")
+        elif "CIS" in query:
+            query = query.replace("CIS", "Construction Industry Scheme Reforms")
+        elif "CISR" in query:
+            query = query.replace("CISR", "Construction Industry Scheme Reforms")
+        elif "Cis" in query:
+            query = query.replace("Cis", "Construction Industry Scheme Reforms")
+        elif "Cisr" in query:
+            query = query.replace("Cisr", "Construction Industry Scheme Reforms")
         
         response = process_query(st.session_state['vectordb'], query, chat_history)
         
