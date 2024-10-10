@@ -149,7 +149,7 @@ def get_database():
 
 def main():
     # Set the title and subtitle of the app
-    st.title("🦜🔗 Chat With Files")
+    st.title("🦜🔗 Construction Industry Scheme Reforms Bot!")
     st.header("Ask Questions")
     query = st.text_input("Ask a question (query/prompt)")
     st.session_state['vectordb'] = get_database()
