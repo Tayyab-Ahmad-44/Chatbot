@@ -30,7 +30,7 @@ footer {visibility: hidden;}
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 llm = ChatGroq(
-        api_key="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",
+        api_key="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",
         temperature=0,
         model="llama-3.1-70b-versatile",
     )
