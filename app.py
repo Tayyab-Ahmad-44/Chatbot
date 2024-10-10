@@ -18,6 +18,17 @@ from langchain_core.output_parsers import StrOutputParser
 os.environ["GOOGLE_API_KEY"] = "AIzaSyCMtgjCDQl7iBJsLa2iGTH0KBmsIw3UGFo"
 os.environ["TAVILY_API_KEY"] = "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"
 
+hide_streamlit_style = """
+<style>
+#MainMenu {visibility: hidden;}
+header {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+"""
+
+# Inject the CSS
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 llm = ChatGroq(
         api_key="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",
         temperature=0,
@@ -137,17 +148,6 @@ def get_database():
     
 
 def main():
-    # Custom CSS to hide the header
-    hide_streamlit_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            header {visibility: hidden;}
-            footer {visibility: hidden;}
-            </style>
-            """
-
-    # Inject the CSS
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
     # Set the title and subtitle of the app
     st.title("🦜🔗 Chat With Files")
     st.header("Ask Questions")
